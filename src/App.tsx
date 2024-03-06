@@ -1,3 +1,4 @@
+import GoogleMap from "./components/GoogleMap";
 import MapBoxGL from "./components/MapBox";
 import MapComponent from "./components/MapLeaflet";
 import "leaflet/dist/leaflet.css";
@@ -11,6 +12,8 @@ function App() {
       <MapComponent position={position} />
       <h1>React MapBoxGL Example</h1>
       <MapBoxGL position={{ lat: position[0], lng: position[1] }} />
+      <h1>React MapBoxGL Example</h1>
+      <GoogleMap position={{ lat: position[0], lng: position[1] }} />
     </div>
   );
 }
