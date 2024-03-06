@@ -2,6 +2,8 @@ import GoogleMap from "./components/GoogleMap";
 import MapBoxGL from "./components/MapBox";
 import MapComponent from "./components/MapLeaflet";
 import "leaflet/dist/leaflet.css";
+//missing this import css will cause Mapbox to display Marker improperly
+import "mapbox-gl/dist/mapbox-gl.css";
 
 function App() {
   //lat long

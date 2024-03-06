@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L, { divIcon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import PopUpDemo from "../PopUpDemo";
@@ -10,7 +10,7 @@ interface MapProps {
 
 const regularMapUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const satelliteMapUrl =
-  "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=YOUR_ACCESS_TOKEN";
+  "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid29yYXdhdGUiLCJhIjoiY2xubXpmMjVuMDE4NzJybGp3Zjc0YjJudSJ9.lMMtWaTf7t_bIzyghIqTTA";
 
 function MapComponent({ position }: MapProps) {
   const [mapLayer, setMapLayer] = useState(regularMapUrl);
@@ -42,9 +42,9 @@ function MapComponent({ position }: MapProps) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
         />
         <Marker position={position} icon={customIcon}>
-          <Tooltip permanent direction="top" offset={[0, -25]}>
+          <Popup offset={[0, -25]}>
             <PopUpDemo />
-          </Tooltip>
+          </Popup>
         </Marker>
       </MapContainer>
     </>
