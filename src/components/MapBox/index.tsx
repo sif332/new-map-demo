@@ -1,11 +1,21 @@
-import { Map as MapGL, Marker } from "react-map-gl";
+import {
+  Map as MapGL,
+  Marker,
+  NavigationControl,
+  FullscreenControl,
+  ScaleControl,
+  GeolocateControl,
+  MapRef,
+} from "react-map-gl";
 import { Pin } from "../Pin";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 export default function MapBoxGL(props: {
   position: { lat: number; lng: number };
 }) {
   const { position } = props;
+
+  const mapRef = useRef<MapRef>(null);
   const [viewState, setViewState] = useState({
     longitude: position.lng,
     latitude: position.lat,
@@ -14,8 +24,23 @@ export default function MapBoxGL(props: {
 
   console.log("MapBoxGL Render");
 
+  const zoomIn = () => {
+    const map = mapRef.current?.getMap();
+    if (map) {
+      map.flyTo({ zoom: map.getZoom() + 1 }); // Smooth zoom in
+    }
+  };
+
+  const zoomOut = () => {
+    const map = mapRef.current?.getMap();
+    if (map) {
+      map.flyTo({ zoom: map.getZoom() - 1 }); // Smooth zoom out
+    }
+  };
+
   return (
     <MapGL
+      ref={mapRef}
       initialViewState={viewState}
       // longitude={viewState.longitude}
       // latitude={viewState.latitude}
@@ -27,9 +52,22 @@ export default function MapBoxGL(props: {
       //   setViewState(e.viewState);
       // }}
     >
+      <GeolocateControl position="top-left" />
+      <FullscreenControl position="top-left" />
+      <NavigationControl showCompass={false} position="top-left" />
+      <ScaleControl />
+
       <Marker longitude={position.lng} latitude={position.lat} anchor="center">
         <Pin />
       </Marker>
+
+      <div
+        className="flex gap-4 text-red-500"
+        style={{ position: "absolute", top: 10, right: 10 }}
+      >
+        <button onClick={zoomIn}>Zoom In</button>
+        <button onClick={zoomOut}>Zoom Out</button>
+      </div>
     </MapGL>
   );
 }
