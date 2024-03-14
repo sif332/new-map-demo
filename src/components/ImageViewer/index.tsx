@@ -82,6 +82,16 @@ export default function ImageViewer(props: {
     };
   }, [imagePosition, zoom]);
 
+   //update displayedImageSize when viewport has been changed (Responsive Design)
+   useEffect(() => {
+    if (!viewerRef.current) return;
+    const resizeObserver = new ResizeObserver(() => {
+      handleImageLoad();
+    });
+    resizeObserver.observe(viewerRef.current);
+    return () => resizeObserver.disconnect(); // clean up
+  }, []);
+
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     setDragging(true);
     setStartDragPos({
